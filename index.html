@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Interactif</title>
+    <style>
+        /* Styles précédents inchangés */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        nav {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .content {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        .experience-item, .formation-item {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .experience-item h3, .formation-item h3 {
+            color: #2a5298;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-item ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .skill-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .skill-level {
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: #1e3c72;
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        /* Nouveau style pour le lien LinkedIn */
+        .contact-item.linkedin {
+            background: #0077B5;
+            color: white;
+            cursor: pointer;
+        }
+
+        .contact-item.linkedin a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .contact-item.linkedin:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav a {
+                width: 100%;
+                text-align: center;
+            }
+
+            .content {
+                padding: 1rem;
+            }
+            .profile-container {
+            display: flex;
+            gap: 2rem;
+            align-items: start;
+            margin-bottom: 2rem;
+        }
+
+        .profile-photo {
+            flex-shrink: 0;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #1e3c72;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-text {
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .profile-photo {
+                margin-bottom: 1.5rem;
+            }
+        }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header reste identique -->
+    <header>
+        <h1>Costabello Florent</h1>
+        <nav>
+            <ul>
+                <li><a href="#" data-target="profil" class="active">Profil</a></li>
+                <li><a href="#" data-target="experience">Expériences</a></li>
+                <li><a href="#" data-target="formation">Formation</a></li>
+                <li><a href="#" data-target="competences">Compétences</a></li>
+                <li><a href="#" data-target="contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="profil" class="content active">
+            <h2>Profil Professionnel</h2>
+            <div class="profile-container">
+                <div class="profile-photo">
+                    <img src="/api/placeholder/200/200" alt="Florent Costabello">
+                </div>
+                <div class="profile-text">
+                    <p>Concepteur développeur d'applications spécialisé dans les technologies Java EE et C#, je suis passionné par le développement responsive. Autonome et enthousiaste, mes premières expériences m'ont permis de renforcer mes acquis et d'appréhender les différents outils et techniques de conception et développement d'applications. En quête de nouveaux challenges, je souhaite rejoindre une organisation à laquelle je pourrais apporter mon dynamisme et mon goût du challenge.</p>
+                </div>
+            </div>
+        </section>
+
+    <main>
+        <!-- Sections précédentes inchangées -->
+        <section id="profil" class="content active">
+            <h2>Profil Professionnel</h2>
+            <p>Concepteur développeur d'applications spécialisé dans les technologies Java EE et C#, je suis passionné par le développement responsive. Autonome et enthousiaste, mes premières expériences m'ont permis de renforcer mes acquis et d'appréhender les différents outils et techniques de conception et développement d'applications. En quête de nouveaux challenges, je souhaite rejoindre une organisation à laquelle je pourrais apporter mon dynamisme et mon goût du challenge.</p>
+        </section>
+
+        <section id="experience" class="content">
+            <h2>Expériences Professionnelles</h2>
+            <div class="experience-item">
+                <h3>Développeur Junior - Isika formation</h3>
+                <p>2024-2025 (juillet)</p>
+                <p>Au sein d'un pool de 6 développeurs :</p>
+                <ul>
+                    <li>Conception, développement et intégration d'une plateforme SaaS de services de gestion et production</li>
+                    <li>Recueil des besoins, cahier des charges, spécifications fonctionnelles</li>
+                    <li>Modélisation, développement, intégration, déploiement</li>
+                </ul>
+                <p>Environnement : Java EE, Hibernate, Spring, HTML, CSS, Bootstrap, C#, ASP.Net, MySQL, GitHub</p>
+            </div>
+            <div class="experience-item">
+                <h3>Alternance - STMicroelectronics</h3>
+                <p>2019 - Master en ingénierie instrumentation industrielle</p>
+                <ul>
+                    <li>Développement d'applications web avec Java EE et Node.js</li>
+                    <li>Projet en équipe de 5 développeurs</li>
+                    <li>Mise en place de pratiques DevOps et CI/CD</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="formation" class="content">
+            <h2>Formation</h2>
+            <div class="formation-item">
+                <h3>Master en Informatique</h3>
+                <p>Université de Paris - 2018</p>
+                <p>Spécialisation en développement web et systèmes distribués</p>
+            </div>
+        </section>
+
+        <section id="competences" class="content">
+            <h2>Compétences</h2>
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <h3>Java EE</h3>
+                    <div class="skill-level">
+                        <div class="skill-progress" data-level="85%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <h3>JavaScript</h3>
+                    <div class="skill-level">
+                        <div class="skill-progress" data-level="90%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <h3>React</h3>
+                    <div class="skill-level">
+                        <div class="skill-progress" data-level="85%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <h3>Node.js</h3>
+                    <div class="skill-level">
+                        <div class="skill-progress" data-level="80%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="content">
+            <h2>Contact</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>📧</span>
+                    <p>costabello.florent@gmail.com</p>
+                </div>
+                <div class="contact-item">
+                    <span>📱</span>
+                    <p>+33 6 64 70 57 22</p>
+                </div>
+                <div class="contact-item">
+                    <span>📍</span>
+                    <p>Rousset 13790 France</p>
+                </div>
+                <div class="contact-item linkedin">
+                    <a href="https://www.linkedin.com/in/florent-costabello" target="_blank" rel="noopener noreferrer">
+                        <span>🔗</span>
+                        <p>LinkedIn</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const navLinks = document.querySelectorAll('nav a');
+        const sections = document.querySelectorAll('.content');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                const targetId = link.getAttribute('data-target');
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const skills = entry.target.querySelectorAll('.skill-progress');
+                    skills.forEach(skill => {
+                        skill.style.width = skill.getAttribute('data-level') || '0%';
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.skills-grid').forEach(grid => observer.observe(grid));
+    </script>
+</body>
+</html>
