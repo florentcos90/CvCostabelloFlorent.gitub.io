@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV Interactif</title>
     <style>
-        /* Styles précédents inchangés */
         * {
             margin: 0;
             padding: 0;
@@ -83,6 +82,33 @@
             transform: translateY(0);
         }
 
+        .profile-container {
+            display: flex;
+            gap: 2rem;
+            align-items: start;
+            margin-bottom: 2rem;
+        }
+
+        .profile-photo {
+            flex-shrink: 0;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #1e3c72;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-text {
+            flex: 1;
+        }
+
         h2 {
             color: #1e3c72;
             margin-bottom: 1.5rem;
@@ -91,7 +117,7 @@
             padding-bottom: 0.5rem;
         }
 
-        .experience-item, .formation-item {
+        .experience-item, .formation-item, .hobby-item {
             margin-bottom: 2rem;
             padding: 1rem;
             background: #f8f9fa;
@@ -101,11 +127,6 @@
         .experience-item h3, .formation-item h3 {
             color: #2a5298;
             margin-bottom: 0.5rem;
-        }
-
-        .experience-item ul {
-            margin-left: 1.5rem;
-            margin-top: 0.5rem;
         }
 
         .skills-grid {
@@ -134,14 +155,33 @@
             height: 100%;
             background: #1e3c72;
             border-radius: 3px;
+            width: 0;
             transition: width 1s ease;
+        }
+
+        .hobby-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .hobby-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .hobby-icon {
+            font-size: 1.5rem;
+            min-width: 40px;
+            text-align: center;
         }
 
         .contact-info {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1rem;
-            margin-top: 1rem;
         }
 
         .contact-item {
@@ -151,14 +191,11 @@
             padding: 1rem;
             background: #f8f9fa;
             border-radius: 8px;
-            transition: all 0.3s ease;
         }
 
-        /* Nouveau style pour le lien LinkedIn */
         .contact-item.linkedin {
             background: #0077B5;
             color: white;
-            cursor: pointer;
         }
 
         .contact-item.linkedin a {
@@ -168,52 +205,6 @@
             align-items: center;
             gap: 0.5rem;
             width: 100%;
-        }
-
-        .contact-item.linkedin:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        @media (max-width: 768px) {
-            nav ul {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            nav a {
-                width: 100%;
-                text-align: center;
-            }
-
-            .content {
-                padding: 1rem;
-            }
-            .profile-container {
-            display: flex;
-            gap: 2rem;
-            align-items: start;
-            margin-bottom: 2rem;
-        }
-
-        .profile-photo {
-            flex-shrink: 0;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid #1e3c72;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .profile-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .profile-text {
-            flex: 1;
         }
 
         @media (max-width: 768px) {
@@ -227,20 +218,19 @@
                 margin-bottom: 1.5rem;
             }
         }
-        }
     </style>
 </head>
 <body>
-    <!-- Header reste identique -->
     <header>
         <h1>Costabello Florent</h1>
         <nav>
             <ul>
-                <li><a href="#" data-target="profil" class="active">Profil</a></li>
-                <li><a href="#" data-target="experience">Expériences</a></li>
-                <li><a href="#" data-target="formation">Formation</a></li>
-                <li><a href="#" data-target="competences">Compétences</a></li>
-                <li><a href="#" data-target="contact">Contact</a></li>
+                <li><a href="#profil" data-target="profil" class="active">Profil</a></li>
+                <li><a href="#experience" data-target="experience">Expériences</a></li>
+                <li><a href="#formation" data-target="formation">Formation</a></li>
+                <li><a href="#competences" data-target="competences">Compétences</a></li>
+                <li><a href="#loisirs" data-target="loisirs">Loisirs</a></li>
+                <li><a href="#contact" data-target="contact">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -257,9 +247,6 @@
                 </div>
             </div>
         </section>
-
-    <main>
-       
 
         <section id="experience" class="content">
             <h2>Expériences Professionnelles</h2>
@@ -285,24 +272,16 @@
             </div>
         </section>
 
-
         <section id="formation" class="content">
             <h2>Formation</h2>
-            
             <div class="formation-item">
-                <h3>Reconvertion en Concepteur Développeur d'Application Java EE, C#</h3>
+                <h3>Reconversion en Concepteur Développeur d'Application Java EE, C#</h3>
                 <p>Isika - Juillet 2024 à Janvier 2025</p>
             </div>
-            
             <div class="formation-item">
                 <h3>Master en Ingénierie en Instrumentation Industrielle</h3>
                 <p>Université d'Aix-Marseille - 2019</p>
             </div>
-        </section>
-        </section>
-
-        <section id="formation" class="content">
-          
         </section>
 
         <section id="competences" class="content">
@@ -311,25 +290,59 @@
                 <div class="skill-item">
                     <h3>Java EE</h3>
                     <div class="skill-level">
-                        <div class="skill-progress" data-level="85%"></div>
+                        <div class="skill-progress" style="width: 85%"></div>
                     </div>
                 </div>
                 <div class="skill-item">
                     <h3>JavaScript</h3>
                     <div class="skill-level">
-                        <div class="skill-progress" data-level="90%"></div>
+                        <div class="skill-progress" style="width: 90%"></div>
                     </div>
                 </div>
                 <div class="skill-item">
                     <h3>React</h3>
                     <div class="skill-level">
-                        <div class="skill-progress" data-level="85%"></div>
+                        <div class="skill-progress" style="width: 85%"></div>
                     </div>
                 </div>
                 <div class="skill-item">
                     <h3>Node.js</h3>
                     <div class="skill-level">
-                        <div class="skill-progress" data-level="80%"></div>
+                        <div class="skill-progress" style="width: 80%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="loisirs" class="content">
+            <h2>Loisirs et Centres d'Intérêt</h2>
+            <div class="hobby-grid">
+                <div class="hobby-item">
+                    <span class="hobby-icon">🏃</span>
+                    <div>
+                        <h3>Jit jitsu Bresilien, Krav maga, Natation, Randonnée</h3>
+                        
+                    </div>
+                </div>
+                <div class="hobby-item">
+                    <span class="hobby-icon">💻</span>
+                    <div>
+                        <h3>Veille technologique</h3>
+                        <p>Exploration des nouvelles technologies web</p>
+                    </div>
+                </div>
+                <div class="hobby-item">
+                    <span class="hobby-icon">🎸</span>
+                    <div>
+                        <h3>Musique, Litterature classique</h3>
+                        <p>Guitariste amateur</p>
+                    </div>
+                </div>
+                <div class="hobby-item">
+                    <span class="hobby-icon">✈️</span>
+                    <div>
+                        <h3></h3>
+                        <p>Découverte de nouvelles cultures</p>
                     </div>
                 </div>
             </div>
@@ -361,36 +374,29 @@
     </main>
 
     <script>
-        const navLinks = document.querySelectorAll('nav a');
-        const sections = document.querySelectorAll('.content');
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('nav a');
+            const sections = document.querySelectorAll('.content');
 
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                
-                navLinks.forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-                
-                const targetId = link.getAttribute('data-target');
+            function showSection(sectionId) {
                 sections.forEach(section => {
                     section.classList.remove('active');
                 });
-                document.getElementById(targetId).classList.add('active');
+                document.getElementById(sectionId).classList.add('active');
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    
+                    const targetId = link.getAttribute('data-target');
+                    showSection(targetId);
+                });
             });
         });
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const skills = entry.target.querySelectorAll('.skill-progress');
-                    skills.forEach(skill => {
-                        skill.style.width = skill.getAttribute('data-level') || '0%';
-                    });
-                }
-            });
-        }, { threshold: 0.5 });
-
-        document.querySelectorAll('.skills-grid').forEach(grid => observer.observe(grid));
     </script>
 </body>
 </html>
